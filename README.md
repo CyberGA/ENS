@@ -30,3 +30,6 @@ npm run dev
 
 Next, open [http://localhost:3000/](http://localhost:3000/) or the `url` display on your terminal in your browser
 
+
+Thanks
+
