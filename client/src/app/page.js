@@ -55,17 +55,25 @@ export default function Home() {
     }
 
     setLoading(prev => true)
-    const web3Provider = await getProviderOrSigner();
-    // Lookup the ENS related to the given address
-    var _ens = await web3Provider.lookupAddress(address);
-    // If the address has an ENS set the ENS
-    if (_ens) {
-      setENS(_ens);
-    } else {
+    try {
+      const web3Provider = await getProviderOrSigner();
+      // Lookup the ENS related to the given address
+      const _ens = await web3Provider.lookupAddress(address);
+      // If the address has an ENS set the ENS
+      if (_ens) {
+        setENS(_ens);
+      } else {
+        setENS(null)
+        alert("No name was found")
+      }
+    } catch (error) {
       setENS(null)
-      alert("No name was found")
+      if (error.code == "INVALID_ARGUMENT") {
+        alert("Invalid ethereum address")
+      }
+    } finally {
+      setLoading(prev => false)
     }
-    setLoading(prev => false)
   };
 
   const connectWallet = async () => {
